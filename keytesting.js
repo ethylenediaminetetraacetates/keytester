@@ -55,6 +55,8 @@ window.onload = function(){
     game.cursorimg = new Image();
     game.cursorimg.src = "assets/cursors/cursorsmall.png";
 
+    //fetch('./data.json').then((response) => response.json()).then((json) => console.log(json));
+
     game.loadfiles([game.sampimg, game.keyss,game.cursorimg],0,true)
 
 }
@@ -80,6 +82,9 @@ game.loadfiles = function(arr,i,startupthings){
         }
     }
 }
+
+
+
 
 function newframe(ms){
     game.ms = ms;
