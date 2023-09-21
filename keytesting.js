@@ -55,9 +55,23 @@ window.onload = function(){
     game.cursorimg = new Image();
     game.cursorimg.src = "assets/cursors/cursorsmall.png";
 
+    //drawImage(img, <s>, <d>)
+    //s:source, d: destination
+    //<s/d>x <s/d>y <s/d>Width <s/d>Height
+    game.ctx.drawScale = function(image,dx,dy){
+        game.ctx.drawImage( image, dx, dy, game.scalefactor.width, game.scalefactor.height );
+        return;
+    }
+    game.ctx.drawScale = function(){
+        game.ctx.drawImage();
+        return;
+    }
+
     //fetch('./data.json').then((response) => response.json()).then((json) => console.log(json));
 
     game.loadfiles([game.sampimg, game.keyss,game.cursorimg],0,true)
+
+
 
 }
 
@@ -75,7 +89,7 @@ game.loadfiles = function(arr,i,startupthings){
         
         return true;
     }
-    console.log("["+i+"/"+arr.length+"]"+" Loading file: "+arr[i])
+    console.log("["+i+"/"+arr.length+"]"+" Loading file: "+arr[i].src);
     if(arr){
         arr[i].onload = function(){
             game.loadfiles(arr,i+1,startupthings);
