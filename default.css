@@ -9,9 +9,144 @@ body{
     font-size: 5vmin;
     font-family: Helvetica, sans-serif;
 }
+.error-small{
+    color: #c22d00;
+    text-align: center;
+    font-size: 3vmin;
+    font-family: Helvetica, sans-serif;
+}
+
+@keyframes heartbeat{
+    from{
+        width:20vmin;
+        animation-timing-function: ease-in-out;
+    }
+    to{
+        width:25vmin;
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes wobble-subtle{
+    from{
+        transform: rotate(0.1deg);
+        animation-timing-function: ease-in-out;
+    }
+    to{
+        transform: rotate(-0.1deg);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes wobble{
+    from{
+        transform: rotate(1deg);
+        animation-timing-function: ease-in-out;
+    }
+    to{
+        transform: rotate(-1deg);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes flashes{
+    from{
+        background-color: #363636;
+        animation-timing-function: ease-in-out;
+    }
+    to{
+        background-color: #3a3a3a;
+        animation-timing-function: ease-in-out;
+    }
+}
+
+@keyframes shadowthing{
+    0%{box-shadow: -2vmin -2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    10%{box-shadow: 2vmin -2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    20%{box-shadow: -2vmin 2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    30%{box-shadow: -3vmin 0vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    40%{box-shadow: 3vmin 2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    50%{box-shadow: 0vmin 0vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    60%{box-shadow: 5vmin 3vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    70%{box-shadow: 3vmin 2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    80%{box-shadow: -5vmin 2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    90%{box-shadow: 4vmin -5vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+    100%{box-shadow: 2vmin 2vmin 10vmin #4d4d4d;animation-timing-function: ease-in-out;}
+}
+
+
+
+.bigbutton{
+    border-radius: 1vmin;
+    background-color: #2c2c2c;
+    border-style: none;
+
+    margin-top: 40vmin;
+
+    width: 20vmin;
+    height: 10vmin;
+
+    text-align: center;
+    font-size: 5vmin;
+    font-family: Helvetica, sans-serif;
+
+    cursor: pointer;
+
+    transition-duration: 2000ms;
+
+    animation-play-state: running, running;
+    animation-name: heartbeat, wobble-subtle;
+    animation-duration: 2000ms, 250ms;
+    animation-iteration-count: infinite, infinite;
+    animation-direction: alternate, alternate;
+
+}
+
+.bigbutton:hover{
+
+    background-color: #363636;
+
+    color:#141414;
+
+    width: 20vmin;
+    height: 10vmin;
+
+    text-align: center;
+    font-size: 5vmin;
+    font-family: Helvetica, sans-serif;
+
+    box-shadow: 0vmin 0vmin 5vmin #4d4d4d;
+
+    cursor: pointer;
+
+    transition-duration: 1000ms;
+
+    animation-play-state: running, running, running, running;
+    animation-name: heartbeat, wobble, flashes, shadowthing;
+    animation-duration: 1000ms, 250ms, 500ms, 10000ms;
+    animation-iteration-count: infinite, infinite, infinite, infinite;
+    animation-direction: alternate, alternate, reverse, alternate;
+}
 
 .maincanvas{
     cursor: none;
+}
+
+.introcontainer-top{
+    text-align: center;
+    height: 90vmin;
+}
+.introcontainer-bottom{
+    text-align: center;
+
+    background-color: #3c3c3c;
+    border-radius: 2vmin;
+
+    height: 4vmin;
+    margin-top: 0vmin;
+
+    clear: both;
+    position: relative;
 }
 
 ::-webkit-scrollbar{
