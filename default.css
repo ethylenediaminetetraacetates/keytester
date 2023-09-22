@@ -16,6 +16,10 @@ body{
     font-family: Helvetica, sans-serif;
 }
 
+.hiddenfileprompt{
+    display: none;
+}
+
 @keyframes heartbeat{
     from{
         width:20vmin;

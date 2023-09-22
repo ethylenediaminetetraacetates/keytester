@@ -46,6 +46,8 @@ window.onload = function(){
 
     game.c.width = window.innerWidth;
     game.c.height = window.innerHeight;
+    
+    game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500);
         
     game.sampimg = new Image();
     game.sampimg.src = "assets/etc/img.png";
@@ -58,12 +60,12 @@ window.onload = function(){
     //drawImage(img, <s>, <d>)
     //s:source, d: destination
     //<s/d>x <s/d>y <s/d>Width <s/d>Height
-    game.ctx.drawScale = function(image,dx,dy){
-        game.ctx.drawImage( image, dx, dy, game.scalefactor.width, game.scalefactor.height );
-        return;
-    }
-    game.ctx.drawScale = function(){
-        game.ctx.drawImage();
+    game.ctx.drawScale = function(image,dx,dy,dwidth,dheight){
+        if(arguments.length == 5){
+            game.ctx.drawImage( image, dx, dy, dwidth * game.scalefactor, dheight * game.scalefactor);
+        }else if(arguments.length == 3){
+            game.ctx.drawImage( image, dx, dy, image.width * game.scalefactor, image.height * game.scalefactor );
+        }
         return;
     }
 
@@ -127,6 +129,7 @@ function newframe(ms){
         game.c.width = window.innerWidth;
         game.c.height = window.innerHeight;
         game.ctx = game.c.getContext("2d");
+        game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500)
     }
     if(mouse.down){
         game.c.requestFullscreen();
@@ -137,7 +140,8 @@ function newframe(ms){
     //drawImage(img, <s>, <d>)
     //s:source, d: destination
     //<s/d>x <s/d>y <s/d>Width <s/d>Height
-    game.ctx.drawImage(game.keyss,0,((3000-ms*1)%6000)+3000);
+
+    game.ctx.drawScale(game.keyss,0,((3000-ms*1)%6000)+3000);
 
     
     for(let i = 0; i > game.objects.length; i++){
@@ -157,7 +161,7 @@ function newframe(ms){
     }
 
 
-    game.ctx.drawImage(game.cursorimg,mouse.x,mouse.y);
+    game.ctx.drawScale(game.cursorimg,mouse.x,mouse.y);
     requestAnimationFrame(newframe);
 }
 
