@@ -48,14 +48,30 @@ window.onload = function(){
     game.c.height = window.innerHeight;
     
     game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500);
-        
+    
+
+    let imagestoload = 3;
+    let loaded = 0;
+
+    let imgloaded = function(){
+        loaded++;
+        console.log("image loaded!");
+        if(loaded == imagestoload){
+            inputsetup();
+            requestAnimationFrame(newframe);
+        }
+
+    }
+
     game.sampimg = new Image();
     game.sampimg.src = "assets/etc/img.png";
-    //keyss = key spritesheet
-    game.keyss = new Image();
+    game.sampimg.onload = imgloaded;
+    game.keyss = new Image(); //key spritesheet
     game.keyss.src = "assets/keysNEW/keysincomplete.png";
+    game.keyss.onload = imgloaded;
     game.cursorimg = new Image();
     game.cursorimg.src = "assets/cursors/cursorsmall.png";
+    game.cursorimg.onload = imgloaded;
 
     //drawImage(img, <s>, <d>)
     //s:source, d: destination
@@ -69,54 +85,6 @@ window.onload = function(){
         return;
     }
 
-    game.loadfiles([game.sampimg, game.keyss,game.cursorimg],0,true)
-
-}
-
-//sets onload for recursion
-game.loadfiles = function(arr,i,startupthings){
-    if(i==arr.length){
-        console.log("files loaded!")
-
-        console.log("running startup functions...")
-        if(startupthings){
-            inputsetup();
-            requestAnimationFrame(newframe);
-        }
-        console.log("done with startup functions!")
-        
-        return true;
-    }
-    console.log("["+i+"/"+arr.length+"]"+" Loading file:  "+arr[i].src);
-    if(arr){
-        arr[i].onload = function(){
-            console.log("["+i+"/"+arr.length+"]"+" File loaded:   "+arr[i].src)
-            game.loadfiles(arr,i+1,startupthings);
-            return;
-        }
-        arr[i].onerror = function(){
-            console.log("["+i+"/"+arr.length+"]"+" Load failed:   "+arr[i].src)
-            console.log("["+i+"/"+arr.length+"]"+" Retrying file: "+arr[i].src)
-            game.loadfiles(arr,i,startupthings);
-            return;
-        }
-    }
-}
-
-
-/*
-called like this: game.fetchfiles( [ {object:fileobj, address:fileaddr}, {object:fileobj2, address:fileaddr2}, ... ] , 0);
-the "object" and "address" parts have to be used.
-
-async.
-*/
-game.fetchfiles = function(objarr,i){
-    if(objarr){
-        let fetchrq = fetch(objarr[i])
-        console.log("["+i+"/"+objarr.length+"] Fetching file:  "+objarr[i].address);
-        fetchrq.then(function(r){return r.json();})
-        game.fetchfiles(objarr, i+1)
-    }
 }
 
 
