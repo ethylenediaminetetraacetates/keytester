@@ -69,11 +69,7 @@ window.onload = function(){
         return;
     }
 
-    //fetch('./data.json').then((response) => response.json()).then((json) => console.log(json));
-
     game.loadfiles([game.sampimg, game.keyss,game.cursorimg],0,true)
-
-
 
 }
 
@@ -91,15 +87,37 @@ game.loadfiles = function(arr,i,startupthings){
         
         return true;
     }
-    console.log("["+i+"/"+arr.length+"]"+" Loading file: "+arr[i].src);
+    console.log("["+i+"/"+arr.length+"]"+" Loading file:  "+arr[i].src);
     if(arr){
         arr[i].onload = function(){
+            console.log("["+i+"/"+arr.length+"]"+" File loaded:   "+arr[i].src)
             game.loadfiles(arr,i+1,startupthings);
+            return;
+        }
+        arr[i].onerror = function(){
+            console.log("["+i+"/"+arr.length+"]"+" Load failed:   "+arr[i].src)
+            console.log("["+i+"/"+arr.length+"]"+" Retrying file: "+arr[i].src)
+            game.loadfiles(arr,i,startupthings);
+            return;
         }
     }
 }
 
 
+/*
+called like this: game.fetchfiles( [ {object:fileobj, address:fileaddr}, {object:fileobj2, address:fileaddr2}, ... ] , 0);
+the "object" and "address" parts have to be used.
+
+async.
+*/
+game.fetchfiles = function(objarr,i){
+    if(objarr){
+        let fetchrq = fetch(objarr[i])
+        console.log("["+i+"/"+objarr.length+"] Fetching file:  "+objarr[i].address);
+        fetchrq.then(function(r){return r.json();})
+        game.fetchfiles(objarr, i+1)
+    }
+}
 
 
 function newframe(ms){
