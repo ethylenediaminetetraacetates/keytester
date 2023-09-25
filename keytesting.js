@@ -50,28 +50,32 @@ window.onload = function(){
     game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500);
     
 
-    let imagestoload = 3;
-    let loaded = 0;
+    let ftl = 4; //files to load
+    let lf = 0; //loaded files
 
-    let imgloaded = function(){
-        loaded++;
+    let loaded = function(){
+        lf++;
         console.log("image loaded!");
-        if(loaded == imagestoload){
+        if(lf == ftl){
             inputsetup();
             requestAnimationFrame(newframe);
         }
-
     }
 
     game.sampimg = new Image();
     game.sampimg.src = "assets/etc/img.png";
-    game.sampimg.onload = imgloaded;
-    game.keyss = new Image(); //key spritesheet
-    game.keyss.src = "assets/keysNEW/spritesheets/keys-v2.png";
-    game.keyss.onload = imgloaded;
+    game.sampimg.onload = loaded;
     game.cursorimg = new Image();
     game.cursorimg.src = "assets/cursors/cursorsmall.png";
-    game.cursorimg.onload = imgloaded;
+    game.cursorimg.onload = loaded;
+
+    game.keyss = {};
+    game.keyss.img = new Image(); //key spritesheet
+    game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
+    game.keyss.img.onload = loaded;
+    game.keyss.json = new Object();
+    game.keyss.json.src = "assets/keysNEW/spritesheets/keys-v2.json";
+    game.keyss.json.onload = loaded;
 
     //drawImage(img, <s>, <d>)
     //s:source, d: destination
@@ -84,6 +88,7 @@ window.onload = function(){
         }
         return;
     }
+
 
 }
 
