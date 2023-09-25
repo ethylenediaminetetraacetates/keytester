@@ -55,7 +55,7 @@ window.onload = function(){
 
     let loaded = function(){
         lf++;
-        console.log("image loaded!");
+        console.log("file loaded!");
         if(lf == ftl){
             inputsetup();
             requestAnimationFrame(newframe);
@@ -73,9 +73,17 @@ window.onload = function(){
     game.keyss.img = new Image(); //key spritesheet
     game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
     game.keyss.img.onload = loaded;
-    game.keyss.json = new Object();
-    game.keyss.json.src = "assets/keysNEW/spritesheets/keys-v2.json";
-    game.keyss.json.onload = loaded;
+
+    game.keyss.jsonrq = new XMLHttpRequest();
+    game.keyss.jsonrq.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            game.keyss.json = JSON.parse(game.keyss.json.responseText);
+            loaded();
+        }
+    }
+    game.keyss.jsonrq.open("GET","assets/keysNEW/spritesheets/keys-v2.json",true);
+    game.keyss.jsonrq.send();
+
 
     //drawImage(img, <s>, <d>)
     //s:source, d: destination
