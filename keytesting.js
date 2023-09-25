@@ -36,6 +36,10 @@ function beep(hz,ms,vol,type){
     osc.stop(ctx.currentTime + (ms/1000));
 }
 
+
+game.keyss = {};
+game.keyss.img = new Image();
+
 window.onload = function(){
 
     console.log("window loaded.");
@@ -69,8 +73,6 @@ window.onload = function(){
     game.cursorimg.src = "assets/cursors/cursorsmall.png";
     game.cursorimg.onload = loaded;
 
-    game.keyss = {};
-    game.keyss.img = new Image(); //key spritesheet
     game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
     game.keyss.img.onload = loaded;
 

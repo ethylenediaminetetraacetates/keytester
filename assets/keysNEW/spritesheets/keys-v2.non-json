@@ -1,3 +1,5 @@
+window.onload = function(){
+
 game.keyss.json = 
 
 {
@@ -60,4 +62,6 @@ game.keyss.json =
 		"size":{"w":2806,"h":3207},
 		"scale":1
 	}
+}
+
 }
