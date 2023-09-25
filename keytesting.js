@@ -50,7 +50,7 @@ window.onload = function(){
     game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500);
     
 
-    let ftl = 4; //files to load
+    let ftl = 3; //files to load
     let lf = 0; //loaded files
 
     let loaded = function(){
@@ -74,15 +74,7 @@ window.onload = function(){
     game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
     game.keyss.img.onload = loaded;
 
-    game.keyss.jsonrq = new XMLHttpRequest();
-    game.keyss.jsonrq.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            game.keyss.json = JSON.parse(game.keyss.json.responseText);
-            loaded();
-        }
-    }
-    game.keyss.jsonrq.open("GET","assets/keysNEW/spritesheets/keys-v2.json",true);
-    game.keyss.jsonrq.send();
+    
 
 
     //drawImage(img, <s>, <d>)
