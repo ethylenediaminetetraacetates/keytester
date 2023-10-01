@@ -29,7 +29,7 @@ function beep(hz,ms,vol,type){
     gain.connect(ctx.destination);
 
     osc.frequency.value = hz;
-    osc.type.value = type;
+    osc.type = type;
     gain.gain.value = vol;
 
     osc.start(ctx.currentTime);
@@ -66,12 +66,15 @@ window.onload = function(){
         }
     }
 
-    game.sampimg = new Image();
-    game.sampimg.src = "assets/etc/img.png";
-    game.sampimg.onload = loaded;
-    game.cursorimg = new Image();
-    game.cursorimg.src = "assets/cursors/cursorsmall.png";
-    game.cursorimg.onload = loaded;
+    game.sample = {};
+    game.sample.img = new Image();
+    game.sample.img.src = "assets/etc/img.png";
+    game.sample.img.onload = loaded;
+
+    game.cursor = {};
+    game.cursor.img = new Image();
+    game.cursor.img.src = "assets/cursors/cursorsmall.png";
+    game.cursor.img.onload = loaded;
 
     game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
     game.keyss.img.onload = loaded;
@@ -124,9 +127,12 @@ function newframe(ms){
         game.ctx = game.c.getContext("2d");
         game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500)
     }
+
+    /*
     if(mouse.down){
         game.c.requestFullscreen();
     }
+    */
     
     
 
@@ -134,7 +140,7 @@ function newframe(ms){
     //s:source, d: destination
     //<s/d>x <s/d>y <s/d>Width <s/d>Height
 
-    game.ctx.drawScale(game.keyss,0,((3000-ms*1)%6000)+3000);
+    game.ctx.drawScale(game.keyss.img,0,((3000-ms*1)%6000)+3000);
 
     
     for(let i = 0; i > game.objects.length; i++){
@@ -148,13 +154,13 @@ function newframe(ms){
                 break;
 
             default:
-                game.ctx.drawImage(game.sampimg,game.objects[i].x,game.objects[i].y);
+                game.ctx.drawImage(game.sample.img,game.objects[i].x,game.objects[i].y);
                 break;
         }
     }
 
 
-    game.ctx.drawScale(game.cursorimg,mouse.x,mouse.y);
+    game.ctx.drawScale(game.cursor.img,mouse.x,mouse.y);
     requestAnimationFrame(newframe);
 }
 
@@ -173,11 +179,17 @@ let delayedmouse = {
     y: 0,
     "snap":false
 }
+let gamepads = navigator.getGamepads();
 
 function inputsetup(){
 
     window.addEventListener('keydown', (e) => {keys[e.code] = true;} );
     window.addEventListener('keyup', (e) => {keys[e.code] = false;} );
+
+    window.addEventListener('gamepadconnected', (e) => {
+        console.log("Gamepad "+e.gamepad.index+": "+e.gamepad.id+" connected. It has "+e.gamepad.buttons.length+" buttons and "+e.gamepad.axes.length+" axes.")
+        gamepads = navigator.getGamepads();
+    });
 
     game.c.addEventListener('mousedown', () => {mouse.down = true;} );
     game.c.addEventListener('mouseup', () => {mouse.down = false;} );
