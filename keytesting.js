@@ -190,6 +190,10 @@ function inputsetup(){
         console.log("Gamepad "+e.gamepad.index+": "+e.gamepad.id+" connected. It has "+e.gamepad.buttons.length+" buttons and "+e.gamepad.axes.length+" axes.")
         gamepads = navigator.getGamepads();
     });
+    window.addEventListener('gamepaddisconnected', (e) => {
+        console.log("Gamepad "+e.gamepad.index+": "+e.gamepad.id+" disconnected. It had "+e.gamepad.buttons.length+" buttons and "+e.gamepad.axes.length+" axes.")
+        gamepads = navigator.getGamepads();
+    });
 
     game.c.addEventListener('mousedown', () => {mouse.down = true;} );
     game.c.addEventListener('mouseup', () => {mouse.down = false;} );
