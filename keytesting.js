@@ -40,71 +40,20 @@ function beep(hz,ms,vol,type){
 game.keyss = {};
 game.keyss.img = new Image();
 
-window.onload = function(){
-
-    console.log("window loaded.");
-    document.querySelector("#canvascontainer").innerHTML = "<canvas id = 'htmlcanvas' class = 'maincanvas'>";
-
-    game.c = document.getElementById("htmlcanvas");
-    game.ctx = game.c.getContext("2d");
-
-    game.c.width = window.innerWidth;
-    game.c.height = window.innerHeight;
-    
-    game.scalefactor = Math.min((game.c.width)/2500,(game.c.height)/2500);
-    
-
-    let ftl = 3; //files to load
-    let lf = 0; //loaded files
-
-    let loaded = function(){
-        lf++;
-        console.log("file loaded!");
-        if(lf == ftl){
-            inputsetup();
-            requestAnimationFrame(newframe);
-        }
-    }
-
-    game.sample = {};
-    game.sample.img = new Image();
-    game.sample.img.src = "assets/etc/img.png";
-    game.sample.img.onload = loaded;
-
-    game.cursor = {};
-    game.cursor.img = new Image();
-    game.cursor.img.src = "assets/cursors/cursorsmall.png";
-    game.cursor.img.onload = loaded;
-
-    game.keyss.img.src = "assets/keysNEW/spritesheets/keys-v2.png";
-    game.keyss.img.onload = loaded;
-
-    
-
-
-    //drawImage(img, <s>, <d>)
-    //s:source, d: destination
-    //<s/d>x <s/d>y <s/d>Width <s/d>Height
-    game.ctx.drawScale = function(image,dx,dy,dwidth,dheight){
-        if(arguments.length == 5){
-            game.ctx.drawImage( image, dx, dy, dwidth * game.scalefactor, dheight * game.scalefactor);
-        }else if(arguments.length == 3){
-            game.ctx.drawImage( image, dx, dy, image.width * game.scalefactor, image.height * game.scalefactor );
-        }
-        return;
-    }
-
-
-}
-
-
 function newframe(ms){
+
+    game.timeDelta = ms-game.ms;
+
     game.ms = ms;
     game.fpsarray.push(ms)
+
     if(game.framesrun == 0){
         console.log("Started in "+ms+" milliseconds.");
-    }else if(game.framesrun < 5){
-        console.log("Frame "+(game.framesrun+1)+": "+ms+" milliseconds.");
+        console.log("Initial fluctuation log:")
+    }else if(game.framesrun < 10){
+        console.log("Frame "+(game.framesrun+1)+": "+ms+" milliseconds. "+Math.round( 1000/(game.timeDelta) *100)/100+" fps.");
+    }else if(game.framesrun == 60){
+        console.log("60 frames run in "+ms+" milliseconds, about "+ Math.round( 1000/(ms/60) *100)/100 +" fps.")
     }
 
     /*
@@ -143,13 +92,17 @@ function newframe(ms){
     game.ctx.drawScale(game.keyss.img,0,((3000-ms*1)%6000)+3000);
 
     
-    for(let i = 0; i > game.objects.length; i++){
+    for(let i = 0; i < game.objects.length; i++){
         switch(game.objects[i].kind){
-
             case 0:
-                game.ctx.drawImage(game.keyss, 400,0, 400,400, game.objects[i].x,game.objects[i].y, 400*game.scalefactor, 400*game.scalefactor);
-                if(!game.objects[i].active){
-                    //fill in with not active code
+                if(game.objects[i].extant){
+                    game.ctx.drawKeyScale(game.objects[i].keyName,game.objects[i].x,game.objects[i].y)
+                    if(!game.objects[i].active || game.objects[i].wasInactive){
+                        game.objects[i].inactivityAge++;
+                        game.objects[i].y += 0.2 * game.timeDelta
+                        game.objects[i].x += Math.random()*2 - 1;
+                        game.objects[i].wasInactive = true;
+                    }
                 }
                 break;
 
@@ -160,10 +113,15 @@ function newframe(ms){
     }
 
 
+
+    //remove later
+    
+
+
+
     game.ctx.drawScale(game.cursor.img,mouse.x,mouse.y);
     requestAnimationFrame(newframe);
 }
-
 
 
 
