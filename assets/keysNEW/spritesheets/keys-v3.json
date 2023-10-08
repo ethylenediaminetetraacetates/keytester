@@ -59,7 +59,7 @@
 		{"filename":"ArrowDown","frame":{"x":0,"y":3208,"w":400,"h":400},"rotated":"false","trimmed":"false","spriteSourceSize":{"x":0,"y":0,"w":400,"h":400},"sourceSize":{"w":400,"h":400}},
 		{"filename":"Alt","frame":{"x":401,"y":3208,"w":400,"h":400},"rotated":"false","trimmed":"false","spriteSourceSize":{"x":0,"y":0,"w":400,"h":400},"sourceSize":{"w":400,"h":400}},
 		{"filename":"Background","frame":{"x":802,"y":3208,"w":400,"h":400},"rotated":"false","trimmed":"false","spriteSourceSize":{"x":0,"y":0,"w":400,"h":400},"sourceSize":{"w":400,"h":400}}
-	]
+	],
 	"meta":{
 		"app":"https://github.com/BdR76/GimpSpriteAtlas/",
 		"version":"GIMP SpriteAtlas plug-in v0.1",
@@ -67,4 +67,4 @@
 		"size":{"w":2806,"h":3608},
 		"scale":1
 	}
-]
+}
